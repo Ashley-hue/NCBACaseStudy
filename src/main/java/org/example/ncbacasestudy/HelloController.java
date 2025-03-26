@@ -24,14 +24,14 @@ HelloController {
 
     private void initialize() {
         fetchProducts();
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> filteredProducts(newValue));
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> filterProducts(newValue));
     }
 
     private void fetchProducts() {
         try {
             String response = Request.get("https://dummyjson.com/products").execute().returnContent().asString();
             ObjectMapper objectMapper = new ObjectMapper();
-            ProductResponse productResponse = ObjectMapper.readValue(response, ProductResponse.class);
+            ProductResponse productResponse = objectMapper.readValue(response, ProductResponse.class);
 
             this.products = productResponse.getProducts();
             productTitles.setAll(products.stream().map(Product::getTitle).collect(Collectors.toList()));
